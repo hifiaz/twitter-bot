@@ -6,7 +6,8 @@ const config = {
   consumer_key: process.env.CONSUMER_KEY,
   consumer_secret: process.env.CONSUMER_SECRET,
   access_token: process.env.ACCESS_TOKEN,
-  access_token_secret: process.env.ACCESS_TOKEN_SECRET
+  access_token_secret: process.env.ACCESS_TOKEN_SECRET,
+  timeout_ms: 60*1000
 };
 const Twitter = new twit(config);
 
@@ -29,12 +30,20 @@ const getUserOfTheDay = () => {
   return USERS[pickUserIndex];
 };
 
+const randomUser = () => {
+  let date = new Date();
+  let hour = date.getTime()
+  let userpick = hour % USERS.length;
+
+  return USERS[userpick];
+}
+
 let retweetTags = async function() {
   try {
     const { data } = await Twitter.get("search/tweets", {
-      q: "#loker, #kerjaan",
+      q: "#loker, #kerjaan, #remotework, #digitalnomad",
       result_type: "mixed",
-      lang: "en"
+      lang: "id"
     });
 
     const statuses = data.statuses.slice(0, MAX_RT_COUNT);
@@ -56,12 +65,13 @@ let retweetTags = async function() {
   }
 };
 
-// retweetTags();
+retweetTags();
 
 let retweetUsers = async function() {
   try {
     const { data } = await Twitter.get("users/show", {
-      user_id: getUserOfTheDay()
+      user_id: randomUser()
+      // user_id: getUserOfTheDay()
     });
     const status = data.status;
     // make sure tweet isn't in reply to another user
@@ -83,4 +93,4 @@ retweetUsers();
 
 setInterval(function() {
   http.get("https://twitter-duende-bot.herokuapp.com/");
-}, 86400000); // checks app every 24 hours
+}, 3600000); // checks app every hours
