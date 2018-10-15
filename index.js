@@ -17,9 +17,9 @@ const USERS = [
   "2176790760", // weworkremotely
   "2302561110", // workingnomads
   "2938471462", // remote_ok
-  "1256890382", // wfhio
   "3123971548", // Jobspresso
   "2484353317", // remotejobme
+  "942052344", // jobmote
 ];
 
 const getUserOfTheDay = () => {
