@@ -10,22 +10,15 @@ const config = {
 };
 const Twitter = new twit(config);
 
-const MAX_RT_COUNT = 1;
+const MAX_RT_COUNT = 10;
 
 const USERS = [
-  "15057943", // moma
-  "14803372", // saam
-  "5225991", // tate
-  "22009731", // design museum
-  "81783051", // artsy
-  "158865339", // fastcodesign
-  "20457080", // nga
-  "24691376", // vangoghmuseum
-  "17057271", // themet
-  "16517711", // whitneymuseum
-  "18201801", // interior design
-  "19038849", // how design
-  "2991948728" // thenewpainting
+  "2176790760", // weworkremotely
+  "2302561110", // workingnomads
+  "2938471462", // remote_ok
+  "1256890382", // wfhio
+  "3123971548", // Jobspresso
+  "2484353317", // remotejobme
 ];
 
 const getUserOfTheDay = () => {
@@ -39,7 +32,7 @@ const getUserOfTheDay = () => {
 let retweetTags = async function() {
   try {
     const { data } = await Twitter.get("search/tweets", {
-      q: "#art, #painting",
+      q: "#loker, #kerjaan",
       result_type: "mixed",
       lang: "en"
     });
@@ -89,5 +82,5 @@ let retweetUsers = async function() {
 retweetUsers();
 
 setInterval(function() {
-  http.get("https://twitterbot-retweet.herokuapp.com/");
+  http.get("https://twitter-duende-bot.herokuapp.com/");
 }, 86400000); // checks app every 24 hours
